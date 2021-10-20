@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Homes"
+title                    : "Güneş' Personal Site"
 title_separator          : "-"
-name                     : &name "Gunes Basak Ozgun"
-description              : &description "CS MSc student at EPFL"
+name                     : &name "Güneş Başak Özgün"
+description              : &description "MSc Computer Science student at EPFL"
 url                      : https://gozgun.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "gozgun/gozgun.github.io"
@@ -87,7 +87,7 @@ author:
   employer         :
   pubmed           :
   googlescholar    :
-  email            : "gunes.ozgun at epfl.ch"
+  email            : "gunes.ozgun@epfl.ch"
   researchgate     :
   uri              :
   bitbucket        :
@@ -102,7 +102,7 @@ author:
   instagram        :
   impactstory      :
   lastfm           :
-  linkedin         : "https://www.linkedin.com/in/gunes-ozgun/"
+  linkedin         : "gunes-ozgun"
   orcid            :
   pinterest        :
   soundcloud       :
