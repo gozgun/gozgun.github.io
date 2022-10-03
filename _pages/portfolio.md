@@ -5,8 +5,18 @@ permalink: /portfolio/
 author_profile: true
 ---
 
-On this page you can find some of my previous works that I enjoyed doing.
+On this page you can find some of my works that I enjoyed being a part of. 
 &nbsp;
+
+**DISCO - DIStributed COllaborative Learning**
+======
+
+DISCO is developed by Machine Learning and Optimization Lab at EPFL to make these technologies accessible for broad groups of people with its open-source and open-access policy.
+
+As a semester project student in Machine Learning and Optimization Lab at EPFL, I updated the front-end of DISCO to create an intuitive and informative experience for users regardless of their knowledge on machine learning concepts. I used Vue and TypeScript to create a visual identity. 
+
+
+[Website link](https://epfml.github.io/disco/#/)
 
 **Cook It Yourself**
 ======

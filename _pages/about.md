@@ -18,3 +18,4 @@ Interests
 ======
 - Product Management
 - Software Engineering
+- Data Science
