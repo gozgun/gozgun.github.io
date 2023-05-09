@@ -14,8 +14,11 @@ I recieved my BSc degree in Mechatronics Engineering and Computer Science & Engi
 
 I'm motivated by building solutions that will enhance people's lives, creative ideas and working with people from diverse backgrounds.
 
+Currently Looking For
+======
+Master Thesis opportunities starting September 2023 in the field of Software Development.
+
 Interests
 ======
 - Product Management
 - Software Engineering
-- Data Science
