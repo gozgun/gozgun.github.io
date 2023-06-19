@@ -12,11 +12,15 @@ Hello, I'm Güneş Başak Özgün. I'm a MSc Computer Science and Minor in Manag
 
 I recieved my BSc degree in Mechatronics Engineering and Computer Science & Engineering (double major) from [Sabancı University](https://www.sabanciuniv.edu/en/).
 
-I'm motivated by building solutions that will enhance people's lives, creative ideas and working with people from diverse backgrounds.
+As a product enthusiast, I'm driven by the potential of technology to enhance people's lives and empower them to achieve their goals.
+
+With a passion for understanding people and their needs, I thrive on collaborating with diverse teams to create innovative solutions to complex problems. My interdisciplinary background equips me with a broad perspective and a solution-oriented mindset, enabling me to forge effective cross-functional relationships.
+
+If you're looking for a driven, creative, and collaborative product manager who's dedicated to delivering value to customers, I'd love to connect and explore potential opportunities.
 
 Currently Looking For
 ======
-Master Thesis opportunities starting September 2023 in the field of Software Development.
+Internship opportunities starting September 2023 in the field of Software Development and Product Management.
 
 Interests
 ======
