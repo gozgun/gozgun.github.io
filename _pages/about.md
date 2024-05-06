@@ -14,10 +14,6 @@ As a product enthusiast, I'm driven by the potential of technology to enhance pe
 
 With a passion for understanding people and their needs, I thrive on collaborating with diverse teams to create innovative solutions to complex problems. My interdisciplinary background equips me with a broad perspective and a solution-oriented mindset, enabling me to forge effective cross-functional relationships.
 
-Currently Looking For
-======
-Master Thesis opportunities starting February 2024 in the field of Software Development in Switzerland.
-
 Interests
 ======
 - Product Management
