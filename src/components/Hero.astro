@@ -1,0 +1,112 @@
+---
+import Nav from './Nav.astro';
+import Portrait from './Portrait.astro';
+const greetings = ['Hey, I’m Güneş', 'Merhaba, ben Güneş', 'Salut, moi c’est Güneş'];
+---
+<section class="hero" id="top">
+  <div class="ink-layer" aria-hidden="true">
+    <div class="ink blob" style="width: 460px; height: 460px; left: 6%; top: 16%; background: var(--accent); opacity: 0.45"></div>
+    <div class="ink blob" style="width: 520px; height: 520px; left: 58%; top: 4%; background: var(--turquoise); opacity: 0.45"></div>
+    <div class="ink blob" style="width: 400px; height: 400px; left: 36%; top: 48%; background: var(--coral); opacity: 0.45"></div>
+  </div>
+  <div class="wrap inner">
+    <Nav />
+    <div class="body">
+      <div class="text">
+        <h1 class="greeting">
+          <span class="sr-only">{greetings[0]}</span>
+          {greetings.map((g, i) => (
+            <span class:list={['hello', { on: i === 0 }]} aria-hidden="true">{g}</span>
+          ))}
+        </h1>
+        <p class="lead">Product engineer who builds learning tools, starting from <span>what is worth building</span>.</p>
+        <div class="actions">
+          <a class="btn btn-dark" href="/experience/">See my experience</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+      <figure><Portrait /></figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; min-height: 820px; display: flex; flex-direction: column; }
+  .inner { position: relative; flex: 1; width: 100%; display: flex; flex-direction: column; }
+  .body { flex: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 48px; padding: 64px 0 120px; }
+  .text { flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 32px; }
+  .greeting { position: relative; height: clamp(38px, 8.5vw, 84px); font-size: clamp(26px, 6.6vw, 64px); line-height: 1.15; letter-spacing: -0.035em; }
+  .hello {
+    position: absolute; left: 0; top: 0; white-space: nowrap;
+    opacity: 0; clip-path: inset(0 100% 0 0);
+    transition: opacity .6s, clip-path 0s linear .6s;
+  }
+  .hello.on { opacity: 1; clip-path: inset(0 0 0 0); transition: clip-path 1.6s cubic-bezier(.4, 0, .2, 1), opacity .2s; }
+  .lead { margin: 0; max-width: 560px; font-family: var(--display); font-weight: 500; letter-spacing: -0.015em; font-size: 30px; line-height: 1.3; color: var(--ink-2); }
+  .lead span { color: var(--accent); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 8px; }
+  figure { margin: -72px 0 0; flex: 0 1 320px; display: flex; justify-content: center; color: var(--ink); }
+  figure :global(.portrait) { width: 100%; max-width: 320px; height: auto; }
+  @media (max-width: 760px) {
+    .hero { min-height: 0; }
+    .body { padding: 32px 0 72px; gap: 32px; }
+    .lead { font-size: 24px; }
+    figure { margin: 0 auto; flex-basis: 220px; }
+  }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Greeting: cycle languages, each one "written" in.
+  const hellos = Array.from(document.querySelectorAll<HTMLElement>('.hello'));
+  let current = 0;
+  if (!reduce && hellos.length > 1) {
+    setInterval(() => {
+      hellos[current].classList.remove('on');
+      current = (current + 1) % hellos.length;
+      hellos[current].classList.add('on');
+    }, 3800);
+  }
+
+  // Colour shapes: drift slowly, bounce off the edges and off each other.
+  const hero = document.querySelector<HTMLElement>('.hero');
+  const blobs = Array.from(document.querySelectorAll<HTMLElement>('.hero .blob'));
+  if (!reduce && hero && blobs.length) {
+    const speeds = [[0.42, 0.28], [-0.34, 0.38], [0.3, -0.4]];
+    const bodies = blobs.map((el, i) => ({
+      el, x0: el.offsetLeft, y0: el.offsetTop, x: el.offsetLeft, y: el.offsetTop,
+      s: el.offsetWidth, vx: speeds[i % 3][0], vy: speeds[i % 3][1],
+    }));
+    let visible = true;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(hero);
+    const step = () => {
+      if (visible && !document.hidden) {
+        const W = hero.clientWidth, H = hero.clientHeight;
+        for (const b of bodies) {
+          b.x += b.vx; b.y += b.vy;
+          const minX = -b.s * 0.3, maxX = W - b.s * 0.7, minY = -b.s * 0.3, maxY = H - b.s * 0.7;
+          if (b.x < minX) { b.x = minX; b.vx = Math.abs(b.vx); }
+          if (b.x > maxX) { b.x = maxX; b.vx = -Math.abs(b.vx); }
+          if (b.y < minY) { b.y = minY; b.vy = Math.abs(b.vy); }
+          if (b.y > maxY) { b.y = maxY; b.vy = -Math.abs(b.vy); }
+        }
+        for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
+          const a = bodies[i], c = bodies[j];
+          const dx = (c.x + c.s / 2) - (a.x + a.s / 2), dy = (c.y + c.s / 2) - (a.y + a.s / 2);
+          const d = Math.hypot(dx, dy) || 1, minD = (a.s + c.s) * 0.32;
+          if (d < minD) {
+            const nx = dx / d, ny = dy / d;
+            const rel = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;
+            if (rel < 0) { a.vx += rel * nx; a.vy += rel * ny; c.vx -= rel * nx; c.vy -= rel * ny; }
+            const push = (minD - d) / 2;
+            a.x -= nx * push; a.y -= ny * push; c.x += nx * push; c.y += ny * push;
+          }
+        }
+        for (const b of bodies) b.el.style.transform = `translate(${b.x - b.x0}px, ${b.y - b.y0}px)`;
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+</script>

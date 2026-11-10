@@ -1,0 +1,21 @@
+---
+interface Props { large?: boolean }
+const { large = false } = Astro.props;
+---
+<div class:list={['soon', { large }]}>
+  <div class="ink" aria-hidden="true" style="width: 300px; height: 300px; right: -60px; top: -120px; background: var(--turquoise); opacity: 0.4"></div>
+  <div class="ink" aria-hidden="true" style="width: 260px; height: 260px; left: -80px; bottom: -140px; background: var(--accent); opacity: 0.22"></div>
+  <span class="pill">Coming soon</span>
+  <p>Stories from my product work, starting with what I learn building with AI at She Builds.</p>
+</div>
+
+<style>
+  .soon {
+    position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px;
+    padding: 40px 32px; border-radius: 20px; background: var(--tint); border: 1px solid var(--line);
+  }
+  .pill { position: relative; align-self: flex-start; background: var(--ink); color: var(--card); }
+  p { position: relative; margin: 0; max-width: 620px; font-family: var(--display); font-weight: 500; letter-spacing: -0.015em; font-size: 24px; line-height: 1.35; }
+  .large p { font-size: 28px; }
+  @media (max-width: 760px) { .soon { padding: 32px 22px; } p, .large p { font-size: 21px; } }
+</style>

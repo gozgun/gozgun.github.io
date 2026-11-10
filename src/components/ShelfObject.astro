@@ -1,0 +1,62 @@
+---
+// One object on the shelf: a book spine, a framed product logo, or a cassette.
+import type { ShelfItem } from '../data/shelf';
+interface Props {
+  item: ShelfItem;
+  kind: 'book' | 'product' | 'podcast';
+  index: number;
+  color: string;
+  href?: string;
+  id?: string;
+}
+const { item, kind, index, color, href, id } = Astro.props;
+const widths = [52, 44, 60, 48, 56, 42, 64, 50];
+const heights = [212, 182, 232, 198, 172, 222, 190, 206];
+const Tag = href ? 'a' : 'button';
+const attrs = href ? { href } : { type: 'button', 'aria-pressed': 'false', 'data-id': id };
+const tilt = index % 2 ? 2.5 : -2;
+---
+{kind === 'book' && (
+  <Tag {...attrs} class="obj book" aria-label={item.title} style={`width: ${widths[index % 8]}px; height: ${heights[index % 8]}px; background: ${color}`}>
+    <span>{item.title}</span>
+  </Tag>
+)}
+{kind === 'product' && (
+  <Tag {...attrs} class="obj frame" aria-label={item.title} style={`--tilt: ${tilt}deg`}>
+    {item.logo
+      ? <img src={item.logo} alt="" />
+      : <span style={`background: ${color}`}>{item.title.charAt(0)}</span>}
+  </Tag>
+)}
+{kind === 'podcast' && (
+  <Tag {...attrs} class="obj tape" aria-label={item.title} style={`background: ${color}`}>
+    <span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </Tag>
+)}
+
+<style>
+  .obj {
+    flex: 0 0 auto; border: 0; padding: 0; cursor: pointer; text-decoration: none; color: var(--ink);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .obj:hover { transform: translateY(-6px); }
+  .obj[aria-pressed='true'] { transform: translateY(-8px); box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--ink); }
+  .book { display: flex; align-items: center; justify-content: center; border-radius: 4px 4px 2px 2px; padding: 12px 0; overflow: hidden; }
+  .book span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .frame {
+    display: flex; width: 100px; height: 100px; padding: 8px; border-radius: 3px; background: #FBF8F3;
+    box-shadow: 0 6px 14px rgba(22,32,43,0.14); transform: rotate(var(--tilt));
+  }
+  .frame:hover { transform: rotate(var(--tilt)) translateY(-6px); }
+  .frame span { flex: 1; display: flex; align-items: center; justify-content: center; border-radius: 2px; font-family: var(--display); font-size: 32px; font-weight: 600; }
+  .frame img { width: 100%; height: 100%; object-fit: contain; }
+  .tape {
+    display: flex; align-items: center; justify-content: center; gap: 28px; width: 124px; height: 78px;
+    border-radius: 10px; box-shadow: 0 6px 14px rgba(22,32,43,0.12);
+  }
+  .tape span { width: 22px; height: 22px; border-radius: 50%; border: 4px solid #FBF8F3; }
+  @media (max-width: 760px) {
+    .tape { width: 100px; height: 64px; gap: 20px; }
+    .tape span { width: 18px; height: 18px; border-width: 3px; }
+  }
+</style>

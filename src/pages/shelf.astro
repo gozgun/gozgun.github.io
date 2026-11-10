@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import ShelfObject from '../components/ShelfObject.astro';
+import { books, products, podcasts, shelfColors } from '../data/shelf';
+
+const shelves = [
+  { key: 'book', label: 'Books', kind: 'book' as const, items: books, offset: 0 },
+  { key: 'product', label: 'Products', kind: 'product' as const, items: products, offset: 3 },
+  { key: 'podcast', label: 'Podcasts', kind: 'podcast' as const, items: podcasts, offset: 5 },
+];
+const typeName = { book: 'Book', product: 'Product', podcast: 'Podcast' };
+const all = Object.fromEntries(
+  shelves.flatMap((s) => s.items.map((it, i) => [
+    `${s.key}-${i}`,
+    { meta: typeName[s.key as keyof typeof typeName] + (it.by ? ` · ${it.by}` : ''), why: it.why },
+  ])),
+);
+const first = all['book-0'];
+---
+<Base title="Shelf" description="Books, products and podcasts I keep coming back to." glow="var(--coral)">
+  <div class="wrap page">
+    <h1 class="page-title">The shelf</h1>
+    <div class="layout">
+      <div class="shelves">
+        {shelves.map((s) => (
+          <section aria-labelledby={`sh-${s.key}`} data-shelf={s.key}>
+            <h2 id={`sh-${s.key}`} class="label">{s.label}</h2>
+            <div class="row">
+              {s.items.map((it, i) => (
+                <ShelfObject item={it} kind={s.kind} index={i} color={shelfColors[(i + s.offset) % 8]} id={`${s.key}-${i}`} />
+              ))}
+            </div>
+            <div class="plank" aria-hidden="true"></div>
+            <div class="note inline" hidden></div>
+          </section>
+        ))}
+      </div>
+      <aside class="note side" aria-live="polite">
+        <p class="note-meta">{first.meta}</p>
+        <p class="note-why">{first.why}</p>
+      </aside>
+    </div>
+  </div>
+  <script type="application/json" id="shelf-data" set:html={JSON.stringify(all)} />
+</Base>
+
+<style>
+  .page { padding-bottom: 120px; }
+  .layout { display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start; }
+  .shelves { flex: 3 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 56px; }
+  .label { margin-bottom: 12px; }
+  .row { display: flex; align-items: flex-end; gap: 14px; overflow-x: auto; min-height: 120px; padding: 16px 12px 0; }
+  [data-shelf='book'] .row { gap: 6px; min-height: 240px; }
+  .plank { height: 12px; border-radius: 3px; background: var(--wood); box-shadow: 0 10px 18px rgba(22,32,43,0.10); }
+  .side {
+    flex: 1 1 260px; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px;
+    padding: 28px; background: rgba(248,250,252,0.9); border: 1px solid var(--line); border-radius: 16px;
+  }
+  .note :global(.note-meta) { margin: 0; font-size: 13px; font-weight: 500; color: var(--accent); }
+  .note :global(.note-why) { margin: 0; font-family: var(--display); font-weight: 500; letter-spacing: -0.015em; font-size: 24px; line-height: 1.4; }
+  .inline {
+    margin-top: 12px; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  }
+  .inline :global(.note-why) { font-family: var(--body); font-size: 17px; letter-spacing: 0; line-height: 1.5; }
+  .inline[hidden] { display: none; }
+  @media (min-width: 761px) { .inline { display: none !important; } }
+  @media (max-width: 760px) { .side { display: none; } }
+</style>
+
+<script>
+  const data = JSON.parse(document.getElementById('shelf-data')!.textContent || '{}');
+  const objects = Array.from(document.querySelectorAll<HTMLButtonElement>('button.obj'));
+  const side = document.querySelector<HTMLElement>('.side')!;
+
+  function select(id: string, count = true) {
+    const d = data[id];
+    if (!d) return;
+    objects.forEach((o) => o.setAttribute('aria-pressed', String(o.dataset.id === id)));
+    const html = `<p class="note-meta">${d.meta}</p><p class="note-why">${d.why}</p>`;
+    side.innerHTML = html;
+    document.querySelectorAll<HTMLElement>('.inline').forEach((el) => {
+      const mine = el.closest('section')?.dataset.shelf === id.split('-')[0];
+      el.hidden = !mine;
+      if (mine) el.innerHTML = html;
+    });
+    if (count) (window as any).goatcounter?.count?.({ path: `shelf-${id}`, title: d.meta, event: true });
+  }
+
+  objects.forEach((o) => o.addEventListener('click', () => select(o.dataset.id!)));
+  // Start with the first book selected, without counting it as a click.
+  select('book-0', false);
+</script>
