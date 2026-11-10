@@ -100,7 +100,7 @@ export const community = [
 ];
 
 export const languages = [
-  { hello: 'Merhaba', name: 'Turkish', level: 'Native', steps: 6 },
-  { hello: 'Hey', name: 'English', level: 'C2', steps: 6 },
-  { hello: 'Salut', name: 'French', level: 'B1', steps: 3 },
+  { name: 'Turkish', level: 'Native' },
+  { name: 'English', level: 'C2' },
+  { name: 'French', level: 'B1' },
 ];

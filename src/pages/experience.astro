@@ -72,17 +72,9 @@ const sections: { name: string; roles: Role[] }[] = [
 
     <section class="quiet-block">
       <h2 class="label">Languages</h2>
-      <div class="grid">
-        {languages.map((l) => (
-          <div class="card box lang">
-            <p class="hello">{l.hello}</p>
-            <div class="lang-row"><span>{l.name}</span><strong>{l.level}</strong></div>
-            <div class="steps" role="img" aria-label={`${l.level}${l.level === 'Native' ? '' : `, ${l.steps} of 6 levels`}`}>
-              {Array.from({ length: 6 }, (_, i) => <span class:list={{ on: i < l.steps }}></span>)}
-            </div>
-          </div>
-        ))}
-      </div>
+      <ul class="langs">
+        {languages.map((l) => <li><strong>{l.name}</strong> {l.level}</li>)}
+      </ul>
     </section>
   </div>
 </Base>
@@ -147,12 +139,8 @@ const sections: { name: string; roles: Role[] }[] = [
   .box h3 { font-size: 24px; line-height: 1.25; }
   .box p { margin: 0; color: var(--ink-2); }
   .box .meta { color: var(--muted); }
-  .lang { gap: 16px; padding: 24px; }
-  .lang .hello { font-family: var(--display); font-weight: 500; font-size: 26px; line-height: 1.2; color: var(--ink); }
-  .lang-row { display: flex; justify-content: space-between; font-size: 14px; }
-  .steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
-  .steps span { height: 6px; border-radius: 3px; background: var(--chip); }
-  .steps span.on { background: var(--accent); }
+  .langs { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 40px; font-size: 18px; color: var(--ink-2); }
+  .langs strong { font-weight: 600; color: var(--ink); margin-right: 6px; }
 
   @media (max-width: 760px) {
     .group { width: 100%; }
