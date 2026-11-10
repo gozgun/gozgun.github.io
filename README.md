@@ -19,7 +19,7 @@ Everything you write lives in `src/data/`:
 - `site.ts`: links and the GoatCounter code.
 
 The portrait is `src/components/Portrait.astro`; replace the paths with your own SVG any time.
-The CV lives in `public/cv/gunes-ozgun-cv.pdf` (an old copy at `public/files/` keeps previous links working).
+The CV lives in `public/cv/gunes-ozgun-cv.pdf`.
 
 ## Visitor counter
 
