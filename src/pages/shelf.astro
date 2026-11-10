@@ -12,7 +12,7 @@ const typeName = { book: 'Book', product: 'Product', podcast: 'Podcast' };
 const all = Object.fromEntries(
   shelves.flatMap((s) => s.items.map((it, i) => [
     `${s.key}-${i}`,
-    { meta: typeName[s.key as keyof typeof typeName] + (it.by ? ` · ${it.by}` : ''), why: it.why },
+    { meta: typeName[s.key as keyof typeof typeName] + (it.by ? ` · ${it.by}` : ''), title: it.title, why: it.why },
   ])),
 );
 const first = all['book-0'];
@@ -37,6 +37,7 @@ const first = all['book-0'];
       </div>
       <aside class="note side" aria-live="polite">
         <p class="note-meta">{first.meta}</p>
+        <p class="note-title">{first.title}</p>
         <p class="note-why">{first.why}</p>
       </aside>
     </div>
@@ -57,6 +58,9 @@ const first = all['book-0'];
     padding: 28px; background: rgba(248,250,252,0.9); border: 1px solid var(--line); border-radius: 16px;
   }
   .note :global(.note-meta) { margin: 0; font-size: 13px; font-weight: 500; color: var(--accent); }
+  .note :global(.note-title) { margin: 0; font-family: var(--display); font-weight: 600; font-size: 18px; line-height: 1.3; color: var(--ink); }
+  .side :global(.note-title) { margin-top: -10px; }
+  .inline :global(.note-title) { margin: 2px 0 6px; }
   .note :global(.note-why) { margin: 0; font-family: var(--display); font-weight: 500; letter-spacing: -0.015em; font-size: 24px; line-height: 1.4; }
   .inline {
     margin-top: 12px; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 14px;
@@ -76,14 +80,21 @@ const first = all['book-0'];
     const d = data[id];
     if (!d) return;
     objects.forEach((o) => o.setAttribute('aria-pressed', String(o.dataset.id === id)));
-    const html = `<p class="note-meta">${d.meta}</p><p class="note-why">${d.why}</p>`;
-    side.innerHTML = html;
+    // Fill a card with the item's type, name and note, as text (never parsed as HTML).
+    const fill = (el: HTMLElement) =>
+      el.replaceChildren(...(['meta', 'title', 'why'] as const).map((k) => {
+        const p = document.createElement('p');
+        p.className = `note-${k}`;
+        p.textContent = d[k];
+        return p;
+      }));
+    fill(side);
     document.querySelectorAll<HTMLElement>('.inline').forEach((el) => {
       const mine = el.closest('section')?.dataset.shelf === id.split('-')[0];
       el.hidden = !mine;
-      if (mine) el.innerHTML = html;
+      if (mine) fill(el);
     });
-    if (count) (window as any).goatcounter?.count?.({ path: `shelf-${id}`, title: d.meta, event: true });
+    if (count) (window as any).goatcounter?.count?.({ path: `shelf-${id}`, title: d.title, event: true });
   }
 
   objects.forEach((o) => o.addEventListener('click', () => select(o.dataset.id!)));
