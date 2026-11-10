@@ -1,5 +1,4 @@
-// Links and service IDs used across the site.
-// Fill in the two IDs once the free accounts exist; the form and counter stay off until then.
+// Links and the visitor counter used across the site.
 export const site = {
   name: 'Güneş Özgün',
   description:
@@ -7,10 +6,8 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/gunes-ozgun/',
   github: 'https://github.com/gozgun',
   cv: '/cv/gunes-ozgun-cv.pdf',
-  // e.g. 'xyzabcde' from https://formspree.io/f/xyzabcde
-  formspreeId: '',
-  // e.g. 'gozgun' from https://gozgun.goatcounter.com
-  goatcounterCode: '',
+  // From https://gozgun.goatcounter.com (public by design, safe to commit)
+  goatcounterCode: 'gozgun',
 };
 
 export const nav = [
