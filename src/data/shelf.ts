@@ -10,8 +10,8 @@ export const books: ShelfItem[] = [
 ];
 
 export const products: ShelfItem[] = [
-  { title: 'Libby', why: 'A library card turned into a calm, beautiful reading app, proof that a public service can feel delightful.' },
-  { title: 'Granola', why: 'It stays out of the way during a meeting and adds structure only afterwards, which is how I think AI should support people.' },
+  { title: 'Libby', logo: '/logos/libby.png', why: 'A library card turned into a calm, beautiful reading app, proof that a public service can feel delightful.' },
+  { title: 'Granola', logo: '/logos/granola.png', why: 'It stays out of the way during a meeting and adds structure only afterwards, which is how I think AI should support people.' },
 ];
 
 export const podcasts: ShelfItem[] = [
