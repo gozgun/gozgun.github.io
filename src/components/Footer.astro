@@ -1,0 +1,13 @@
+---
+import { site } from '../data/site';
+---
+<footer class="wrap">
+  <a href={site.linkedin} data-track="linkedin-footer">LinkedIn</a>
+  <a href={site.github}>GitHub</a>
+  <a href={site.cv} data-track="cv-download-footer">CV</a>
+</footer>
+
+<style>
+  footer { display: flex; flex-wrap: wrap; gap: 24px; padding-top: 8px; padding-bottom: 56px; font-size: 15px; }
+  footer a { padding: 10px 0; }
+</style>

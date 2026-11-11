@@ -1,0 +1,68 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource/inter-tight/500.css';
+import '@fontsource/inter-tight/600.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  glow?: string;
+  ownNav?: boolean;
+}
+const { title, description = site.description, glow, ownNav = false } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : site.name;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#EEF2F7" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {site.goatcounterCode && (
+      <script
+        is:inline
+        data-goatcounter={`https://${site.goatcounterCode}.goatcounter.com/count`}
+        async
+        src="https://gc.zgo.at/count.js"
+      ></script>
+    )}
+  </head>
+  <body>
+    {glow && (
+      <div class="ink-layer" aria-hidden="true" style="height: 640px">
+        <div class="ink drift" style={`width: 560px; height: 560px; right: -6%; top: -12%; background: ${glow}; opacity: 0.35`}></div>
+      </div>
+    )}
+    {!ownNav && <div class="wrap" style="position: relative"><Nav /></div>}
+    <main><slot /></main>
+    <Footer />
+    <script>
+      // Count clicks on anything marked data-track, without cookies.
+      document.addEventListener('click', (e) => {
+        const el = (e.target as HTMLElement).closest('[data-track]');
+        const gc = (window as any).goatcounter;
+        if (el && gc && gc.count) {
+          gc.count({ path: el.getAttribute('data-track'), title: el.textContent?.trim(), event: true });
+        }
+      });
+    </script>
+  </body>
+</html>

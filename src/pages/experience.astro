@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import { toolkit, certificate, toolNote, work, education, community, languages, type Role } from '../data/experience';
+
+const roles = [...work, ...education];
+// A skill chip is clickable only when something on the page backs it up.
+const isUsed = (skill: string) =>
+  roles.some((r) => (r.uses || []).includes(skill) || r.bullets.some((b) => b.tags.includes(skill)));
+const sections: { name: string; roles: Role[] }[] = [
+  { name: 'Work', roles: work },
+  { name: 'Education', roles: education },
+];
+---
+<Base title="Experience" description="Work, education and the skills behind them." glow="var(--turquoise)">
+  <div class="wrap page">
+    <h1 class="page-title">Experience</h1>
+
+    <section class="toolkit" aria-labelledby="tool-h">
+      <h2 id="tool-h" class="label">Toolkit · tap a skill to see where I used it</h2>
+      {toolkit.map((g) => (
+        <div class="tool-row">
+          <span class="group">{g.name}</span>
+          {g.skills.map((s) => isUsed(s)
+            ? <button type="button" class="chip" data-skill={s} aria-pressed="false">{s}</button>
+            : <span class="chip quiet" title="A tool I use every day, no story on this page yet">{s}</span>)}
+        </div>
+      ))}
+      <p class="cert"><strong>Certificate</strong> · {certificate}</p>
+    </section>
+
+    <div class="filter-slot" aria-live="polite">
+      <div class="filter-bar" hidden>
+        <p>Showing where I used <strong class="skill-name"></strong></p>
+        <button type="button" class="clear" aria-label="Clear skill filter">×</button>
+      </div>
+    </div>
+
+    {sections.map((sec) => (
+      <section class="timeline">
+        <h2 class="label">{sec.name}</h2>
+        {sec.roles.map((r) => (
+          <article class="role" data-uses={(r.uses || []).join('|')}>
+            <span class="dot" aria-hidden="true" style={`border-color: ${r.color}; --c: ${r.color}`}></span>
+            {r.logo
+              ? <div class="mono has-logo" aria-hidden="true"><img src={r.logo} alt="" width="72" height="72" loading="lazy" /></div>
+              : <div class="mono" aria-hidden="true" style={`background: ${r.color}; color: ${r.ink}`}>{r.mono}</div>}
+            <div class="role-card">
+              <div class="head">
+                <p class="meta">{r.meta}</p>
+                <h3>{r.title}</h3>
+                {r.uses && <span class="pill role-note" hidden>Used throughout this role for {toolNote}</span>}
+              </div>
+              <ul>
+                {r.bullets.map((b) => <li data-tags={b.tags.join('|')}><span>{b.text}</span></li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </section>
+    ))}
+
+    <section class="quiet-block">
+      <h2 class="label">Mentoring &amp; community</h2>
+      <div class="grid">
+        {community.map((c) => (
+          <article class="card box">
+            <p class="meta">{c.meta}</p>
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="quiet-block">
+      <h2 class="label">Languages</h2>
+      <ul class="langs">
+        {languages.map((l) => <li><strong>{l.name}</strong> {l.level}</li>)}
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page { padding-bottom: 72px; }
+  .toolkit { display: flex; flex-direction: column; gap: 12px; }
+  .toolkit .label { margin-bottom: 4px; }
+  .tool-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .group { width: 72px; font-family: var(--display); font-weight: 500; font-size: 18px; }
+  .chip {
+    min-height: 36px; padding: 0 14px; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 500;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; display: inline-flex; align-items: center;
+  }
+  .chip:hover { border-color: #B3BCC7; }
+  .chip[aria-pressed='true'] { background: var(--ink); color: var(--card); border-color: var(--ink); }
+  .chip.quiet { background: transparent; border: 1px dashed #B3BCC7; color: var(--muted); cursor: default; }
+  .cert { margin: 4px 0 0; font-size: 15px; color: var(--ink-2); }
+
+  .filter-slot { position: sticky; top: 12px; z-index: 5; min-height: 64px; padding: 8px 0 32px; }
+  .filter-bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 10px 10px 10px 20px; border-radius: 24px; background: var(--ink); color: var(--card);
+    box-shadow: 0 10px 30px rgba(22,32,43,0.18);
+  }
+  .filter-bar[hidden] { display: none; }
+  .filter-bar p { margin: 0; font-size: 15px; }
+  .filter-bar strong { color: #9FC0F2; }
+  .clear { width: 40px; height: 40px; border-radius: 999px; border: 1px solid rgba(248,250,252,0.4); background: transparent; color: var(--card); font: inherit; font-size: 18px; cursor: pointer; }
+
+  .timeline { padding-bottom: 56px; }
+  .role {
+    position: relative; display: flex; flex-wrap: wrap; gap: 20px 32px;
+    margin-left: 28px; padding: 28px 0 28px 44px; border-left: 2px solid var(--line); transition: opacity .3s;
+  }
+  .dot { position: absolute; left: -9px; top: 44px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid; background: var(--bg); }
+  .mono { flex: 0 0 auto; width: 72px; height: 72px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 28px; font-weight: 500; }
+  .mono.has-logo { overflow: hidden; background: #FFFFFF; outline: 1px solid var(--line); outline-offset: -1px; }
+  .mono img { width: 100%; height: 100%; object-fit: cover; }
+  .role-card {
+    flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 16px 40px; padding: 28px; background: rgba(248,250,252,0.85); border: 1px solid var(--line); border-radius: 16px;
+  }
+  .head { display: flex; flex-direction: column; gap: 4px; }
+  .meta { margin: 0; font-size: 15px; color: var(--muted); }
+  h3 { font-size: 30px; line-height: 1.2; }
+  .role-note[hidden] { display: none; }
+  .role-note { align-self: flex-start; margin-top: 6px; padding: 4px 12px 4px 16px; background: var(--highlight); }
+  .role ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; color: var(--ink-2); }
+  .role li { transition: opacity .3s; }
+
+  /* Filter states, set by the script below */
+  .filtering .role.miss { opacity: 0.35; }
+  .filtering .role.hit .dot { background: var(--c); }
+  .filtering .role.whole .role-card { border: 2px solid var(--accent); }
+  .filtering .role:not(.whole) li.miss { opacity: 0.35; }
+  .filtering li.hit { color: var(--ink); font-weight: 500; }
+  .filtering li.hit span { background: linear-gradient(transparent 58%, var(--highlight) 58%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .filtering .quiet-block { opacity: 0.35; }
+
+  .quiet-block { padding-top: 16px; padding-bottom: 56px; transition: opacity .3s; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; }
+  .box { display: flex; flex-direction: column; gap: 12px; padding: 28px; }
+  .box h3 { font-size: 24px; line-height: 1.25; }
+  .box p { margin: 0; color: var(--ink-2); }
+  .box .meta { color: var(--muted); }
+  .langs { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 40px; font-size: 18px; color: var(--ink-2); }
+  .langs strong { font-weight: 600; color: var(--ink); margin-right: 6px; }
+
+  @media (max-width: 760px) {
+    .group { width: 100%; }
+    .role { margin-left: 8px; padding-left: 24px; }
+    .mono { width: 48px; height: 48px; border-radius: 14px; font-size: 20px; }
+    .role-card { padding: 20px; }
+    h3 { font-size: 24px; }
+  }
+</style>
+
+<script>
+  const page = document.querySelector<HTMLElement>('.page')!;
+  const chips = Array.from(page.querySelectorAll<HTMLButtonElement>('button.chip'));
+  const bar = page.querySelector<HTMLElement>('.filter-bar')!;
+  const nameEl = bar.querySelector<HTMLElement>('.skill-name')!;
+  const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+  function apply(skill: string | null, push = true) {
+    page.classList.toggle('filtering', !!skill);
+    bar.hidden = !skill;
+    nameEl.textContent = skill || '';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.skill === skill)));
+    page.querySelectorAll<HTMLElement>('.role').forEach((role) => {
+      const whole = !!skill && (role.dataset.uses || '').split('|').includes(skill);
+      let any = false;
+      role.querySelectorAll<HTMLElement>('li').forEach((li) => {
+        const hit = !!skill && (li.dataset.tags || '').split('|').includes(skill);
+        any = any || hit;
+        li.classList.toggle('hit', hit && !whole);
+        li.classList.toggle('miss', !!skill && !hit);
+      });
+      role.classList.toggle('whole', whole);
+      role.classList.toggle('hit', whole || any);
+      role.classList.toggle('miss', !!skill && !whole && !any);
+      const note = role.querySelector<HTMLElement>('.role-note');
+      if (note) note.hidden = !whole;
+    });
+    if (push) {
+      const url = new URL(location.href);
+      if (skill) url.searchParams.set('skill', slug(skill)); else url.searchParams.delete('skill');
+      history.replaceState(null, '', url);
+    }
+  }
+
+  chips.forEach((c) => c.addEventListener('click', () => {
+    const skill = c.getAttribute('aria-pressed') === 'true' ? null : c.dataset.skill!;
+    apply(skill);
+    if (skill) (window as any).goatcounter?.count?.({ path: `skill-${slug(skill)}`, title: skill, event: true });
+  }));
+  bar.querySelector('.clear')!.addEventListener('click', () => apply(null));
+
+  // Open with a skill already highlighted, e.g. /experience/?skill=user-research
+  const fromUrl = new URL(location.href).searchParams.get('skill');
+  const match = chips.find((c) => slug(c.dataset.skill!) === fromUrl);
+  if (match) apply(match.dataset.skill!, false);
+</script>

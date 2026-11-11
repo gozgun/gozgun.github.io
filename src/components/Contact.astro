@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+---
+<section id="contact" class="panel">
+  <div class="ink-layer" aria-hidden="true">
+    <div class="ink drift" style="width: 380px; height: 380px; left: -6%; bottom: -30%; background: var(--accent); opacity: 0.55"></div>
+    <div class="ink drift" style="width: 320px; height: 320px; right: 10%; top: -30%; background: var(--turquoise); opacity: 0.4; animation-duration: 36s"></div>
+  </div>
+  <div class="intro">
+    <h2>Get in touch</h2>
+    <p>Whether it’s about a role, mentoring or just saying hi, the easiest way to reach me is a message on LinkedIn.</p>
+  </div>
+  <a class="btn cta" href={site.linkedin} data-track="linkedin-contact">Message me on LinkedIn</a>
+</section>
+
+<style>
+  .panel {
+    position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 32px 48px;
+    margin: 72px 0; padding: 56px; border-radius: 28px; background: var(--ink); color: var(--card);
+  }
+  .intro { position: relative; flex: 1 1 420px; display: flex; flex-direction: column; gap: 16px; }
+  h2 { font-size: 48px; line-height: 1.1; }
+  .intro p { margin: 0; max-width: 520px; color: #D5DCE6; font-size: 18px; }
+  .cta { position: relative; background: var(--card); color: var(--ink); }
+  .cta:hover { color: var(--ink); background: #FFFFFF; }
+  @media (max-width: 760px) {
+    .panel { padding: 32px 20px; margin: 48px 0; }
+    h2 { font-size: 36px; }
+  }
+</style>
