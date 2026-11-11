@@ -41,7 +41,9 @@ const sections: { name: string; roles: Role[] }[] = [
         {sec.roles.map((r) => (
           <article class="role" data-uses={(r.uses || []).join('|')}>
             <span class="dot" aria-hidden="true" style={`border-color: ${r.color}; --c: ${r.color}`}></span>
-            <div class="mono" aria-hidden="true" style={`background: ${r.color}; color: ${r.ink}`}>{r.mono}</div>
+            {r.logo
+              ? <div class="mono has-logo" aria-hidden="true"><img src={r.logo} alt="" width="72" height="72" loading="lazy" /></div>
+              : <div class="mono" aria-hidden="true" style={`background: ${r.color}; color: ${r.ink}`}>{r.mono}</div>}
             <div class="role-card">
               <div class="head">
                 <p class="meta">{r.meta}</p>
@@ -112,6 +114,8 @@ const sections: { name: string; roles: Role[] }[] = [
   }
   .dot { position: absolute; left: -9px; top: 44px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid; background: var(--bg); }
   .mono { flex: 0 0 auto; width: 72px; height: 72px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 28px; font-weight: 500; }
+  .mono.has-logo { overflow: hidden; background: #FFFFFF; outline: 1px solid var(--line); outline-offset: -1px; }
+  .mono img { width: 100%; height: 100%; object-fit: cover; }
   .role-card {
     flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
     gap: 16px 40px; padding: 28px; background: rgba(248,250,252,0.85); border: 1px solid var(--line); border-radius: 16px;

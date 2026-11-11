@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-61.49 -47.53 306 306">
+  <defs>
+    <linearGradient id="schole-mark-lg-1" x1="96.38" y1="55.66" x2="183.02" y2="55.66" gradientUnits="userSpaceOnUse">
+      <stop offset=".18" stop-color="#959ef2"/>
+      <stop offset=".33" stop-color="#95a4f2"/>
+      <stop offset=".96" stop-color="#97bef2"/>
+    </linearGradient>
+    <linearGradient id="schole-mark-lg-2" x1="0" y1="192.98" x2="35.94" y2="192.98" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b8abf2"/>
+      <stop offset="1" stop-color="#b4a8f2"/>
+    </linearGradient>
+    <linearGradient id="schole-mark-lg-3" x1="64.04" y1="148.21" x2="115.44" y2="148.21" gradientUnits="userSpaceOnUse">
+      <stop offset=".28" stop-color="#a49ff2"/>
+      <stop offset="1" stop-color="#9fa8f2"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path fill="url(#schole-mark-lg-1)" d="M178.68,51.35s-.04,0-.06,0c-15.01,0-27.74-20.58-28.28-45.3.01-.59.02-1.18.02-1.78,0-2.16-1.61-3.93-3.74-4.23-2.15-.3-4.19,1.07-4.79,3.15-.11.39-.17.8-.17,1.21,0,.55,0,1.1.01,1.64-.58,24.67-13.3,45.18-28.28,45.18-.13,0-.25.05-.38.06h-12.29c-2.4,0-4.34,1.94-4.34,4.34s1.94,4.34,4.34,4.34h13.79c14.85,1,27.19,22.07,27.19,47.01,0,2.4,1.94,4.34,4.34,4.34s4.34-1.94,4.34-4.34c0-25.45,12.96-46.95,28.3-46.95,2.4,0,4.34-1.94,4.34-4.34s-1.94-4.34-4.34-4.34Z"/>
+      <circle fill="url(#schole-mark-lg-2)" cx="17.97" cy="192.98" r="17.97"/>
+      <path fill="url(#schole-mark-lg-3)" d="M113.46,144.16l-5.41-4.22c-3.74-2.92-7.12-6.29-10.04-10.04l-4.22-5.41c-2.06-2.64-6.05-2.64-8.11,0l-4.22,5.41c-2.92,3.74-6.29,7.12-10.04,10.04l-5.41,4.22c-2.64,2.06-2.64,6.05,0,8.11l5.41,4.22c3.74,2.92,7.12,6.29,10.04,10.04l4.22,5.41c2.06,2.64,6.05,2.64,8.11,0l4.22-5.41c2.92-3.74,6.29-7.12,10.04-10.04l5.41-4.22c2.64-2.06,2.64-6.05,0-8.11Z"/>
+    </g>
+  </g>
+</svg>

@@ -4,6 +4,7 @@
 export type Bullet = { text: string; tags: string[] };
 export type Role = {
   mono: string;
+  logo?: string; // e.g. '/logos/epfl.jpg' in /public/logos/; falls back to `mono`
   color: string;
   ink: string;
   meta: string;
@@ -24,7 +25,7 @@ export const toolNote = 'prototyping and verifying results';
 
 export const work: Role[] = [
   {
-    mono: 'S', color: 'var(--accent)', ink: '#FFFFFF',
+    mono: 'S', logo: '/logos/schole.svg', color: 'var(--accent)', ink: '#FFFFFF',
     meta: '03/2026 – now · Lausanne',
     title: 'Product Engineer at Scholé',
     uses: ['Claude Code', 'Cursor'],
@@ -37,7 +38,7 @@ export const work: Role[] = [
     ],
   },
   {
-    mono: 'D', color: 'var(--turquoise)', ink: 'var(--ink)',
+    mono: 'D', logo: '/logos/demosquare.jpg', color: 'var(--turquoise)', ink: 'var(--ink)',
     meta: '11/2024 – 01/2026 · Lausanne',
     title: 'Full-stack Developer at DemoSquare',
     uses: ['Claude Code', 'Cursor'],
@@ -48,7 +49,7 @@ export const work: Role[] = [
     ],
   },
   {
-    mono: 'A', color: 'var(--blue)', ink: 'var(--ink)',
+    mono: 'A', logo: '/logos/axa.jpg', color: 'var(--blue)', ink: 'var(--ink)',
     meta: '03/2024 – 08/2024 · Lausanne',
     title: 'Master thesis at AXA Group Operations',
     bullets: [
@@ -57,7 +58,7 @@ export const work: Role[] = [
     ],
   },
   {
-    mono: 'K', color: 'var(--ink-2)', ink: '#FFFFFF',
+    mono: 'K', logo: '/logos/kitro.jpg', color: 'var(--ink-2)', ink: '#FFFFFF',
     meta: '09/2023 – 02/2024 · Zurich',
     title: 'Software Developer Intern at KITRO',
     bullets: [
@@ -66,7 +67,7 @@ export const work: Role[] = [
     ],
   },
   {
-    mono: 'P', color: 'var(--coral)', ink: 'var(--ink)',
+    mono: 'P', logo: '/logos/pg.jpg', color: 'var(--coral)', ink: 'var(--ink)',
     meta: '07/2023 – 09/2023 · Istanbul',
     title: 'IT Intern, Marketing Technology at P&G',
     bullets: [
@@ -78,7 +79,7 @@ export const work: Role[] = [
 
 export const education: Role[] = [
   {
-    mono: 'E', color: 'var(--accent)', ink: '#FFFFFF',
+    mono: 'E', logo: '/logos/epfl.jpg', color: 'var(--accent)', ink: '#FFFFFF',
     meta: '2021 – 2024 · EPFL, Lausanne',
     title: 'MSc Computer Science, minor in Management of Technology & Entrepreneurship',
     bullets: [
@@ -87,7 +88,7 @@ export const education: Role[] = [
     ],
   },
   {
-    mono: 'S', color: 'var(--turquoise)', ink: 'var(--ink)',
+    mono: 'S', logo: '/logos/sabanci.jpg', color: 'var(--turquoise)', ink: 'var(--ink)',
     meta: '2021 · Sabancı University, Istanbul',
     title: 'BSc Computer Science & Engineering and Mechatronics Engineering',
     bullets: [{ text: 'Double major in Computer Science & Engineering and Mechatronics Engineering.', tags: [] }],
